@@ -1,4 +1,11 @@
 {% load static %}
+<style>
+  .hlw-msg{
+    font-size: 16px;
+    color: #fff;
+    margin-right: 20px;
+  }
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <img src="{% static 'images/logo.png' %}" alt="">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,12 +13,20 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
+      {% if request.user.is_staff %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'accounts:dashboard' %}">Dashboard <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'accounts:product' %}">Products</a>
       </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'accounts:account' %}">Settings</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
+  <span class="hlw-msg">Hello, {{request.user}}</span>
+  <span class="hlw-msg"><a href="{% url 'accounts:logout' %}">Logout</a></span>
 </nav>

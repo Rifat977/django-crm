@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{%  include 'accounts/status.html' %}
+
 <br>
 <div class="row">
 	<div class="col-md-5">
@@ -11,11 +13,16 @@
 			<a class="btn btn-primary  btn-sm btn-block" href="">Create Customer</a>
 			<table class="table table-sm">
 				<tr>
-					<th></th>
 					<th>Customer</th>
 					<th>Orders</th>
 				</tr>
-
+				{% for customer in customers %}
+				<tr>
+					<td><a href="{% url 'accounts:customer' customer.id %}" class="btn btn-sm btn-info">View</a></td>
+					<td>{{customer.name}}</td>
+					<td>{{customer.phone}}</td>
+				</tr>
+				{% endfor %}
 			</table>
 		</div>
 	</div>
@@ -24,7 +31,6 @@
 		<h5>LAST 5 ORDERS</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="">Create Order</a>
 			<table class="table table-sm">
 				<tr>
 					<th>Product</th>
@@ -33,7 +39,15 @@
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
-
+				{% for order in orders %}
+				<tr>
+					<td>{{order.product}}</td>
+					<td>{{order.created_at}}</td>
+					<td>{{order.status}}</td>
+					<td><a class="btn btn-sm btn-primary" href="{% url 'accounts:update_order' order.id %}">Update</a></td>
+					<td><a class="btn btn-sm btn-danger" href="{% url 'accounts:delete_order' order.id %}">Remove</a></td>
+				</tr>
+				{% endfor %}
 			</table>
 		</div>
 	</div>
